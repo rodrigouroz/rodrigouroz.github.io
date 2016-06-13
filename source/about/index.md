@@ -1,5 +1,6 @@
 ---
 title: About me
+cover: /img/about-bg.jpg
 ---
 I started working in IT 15 years ago.
 
