@@ -440,3 +440,11 @@ img::-moz-selection {
 body {
   webkit-tap-highlight-color: #0085a1;
 }
+.navbar-default .navbar-nav >li >a:hover {
+  color: #ccc;
+  background-color: transparent;
+}
+.navbar-default .navbar-brand:hover {
+  color: #ccc;
+  background-color: transparent;
+}
