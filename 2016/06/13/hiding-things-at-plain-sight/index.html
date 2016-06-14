@@ -212,7 +212,7 @@
 <blockquote><p>“What if the best way to hide something is at plain sight, where no one would suspect?”</p>
 <footer><strong>Edgar Alan Poe</strong><cite>The Purloined Letter</cite></footer></blockquote>
 <h2 id="History"><a href="#History" class="headerlink" title="History"></a>History</h2><p>Yeah, like I’ll try to outperform <em>Wikipedia</em>. Check <a href="https://en.wikipedia.org/wiki/Steganography" target="_blank" rel="external">Steganography</a></p>
-<h2 id="Technique"><a href="#Technique" class="headerlink" title="Technique"></a>Technique</h2><p>The most common form of Steganography is called LSB for <em>Least Significant Bit</em>.</p>
+<h2 id="Technique"><a href="#Technique" class="headerlink" title="Technique"></a>Technique</h2><p>The most common form of Steganography is called LSB for <a href="https://en.wikipedia.org/wiki/Least_significant_bit" target="_blank" rel="external">Least Significant Bit</a>.</p>
 <p>This uses the fact that a slight change in a pixel’s color is undetectable by the human eye.</p>
 <p>Check for instance the samples below.</p>
 <h3 id="Sample-1"><a href="#Sample-1" class="headerlink" title="Sample 1"></a>Sample 1</h3><img src="/2016/06/13/hiding-things-at-plain-sight/sample-1.png" alt="Sample 1" title="Sample 1">
@@ -225,8 +225,12 @@
 <p>So if this is undetectable then perhaps we can use this slight change in our favor…</p>
 <h2 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h2><p>Here I describe the basics of the algorithm used to hide the image (and thus to recover it).</p>
 <p>The input image (the host) must be in RGB format. Each pixel is defined by the colors Red, Green and Blue. Therefore each pixel needs 3 bytes.</p>
-<p>We said we will use the least significant bit for each byte, so for every 3 pixels we have 9 bits available (3 pixels times 3 bytes per pixel gives us 9 bytes, we get a bit of each of those 9 bytes). We can use the first 8 bits to embed a single byte from the data we’re hiding and the last bit can be used to signal the end of the buffer. If the 9th. bit is 0 that means it’s the end of the buffer, otherwise we keep reading until a 0 is found. This allows us to embed several different sections of data in the same image.</p>
-<p>To put it in another way, every 8th. bit of the file is a bit of the concealed buffer of data. There are two sections in this algorithm, the first section is the filename and the second section is the file data.</p>
+<p>We said we will use the least significant bit for each byte, so for one pixel we have: </p>
+<table class="table table-bordered"><tr><th colspan="8" style="text-align: center;">Red</th><th colspan="8" style="text-align: center;">Green</th><th colspan="8" style="text-align: center;">Blue</th></tr><tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td><strong>8</strong></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td><strong>8</strong></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td><strong>8</strong></td></tr></table>
+
+<p>3 bits (the least significant of each byte), so if we take 3 pixels we have 9 bits at our disposal.</p>
+<p>We can use the first 8 bits to embed a single byte from the data we’re hiding and the last bit can be used to signal the end of the buffer. If the 9th. bit is 0 that means it’s the end of the buffer, otherwise we keep reading until a 0 is found. This allows us to embed several different sections of data in the same image.</p>
+<p>This algorithm stores two sections of data, the first section is the filename and the second section is the file data.</p>
 <p>Starting at first pixel the name of the file being hidden is stored. Then after the name (when the algorithm detects an end of the section as described above) the actual data of the file is stored, byte per byte.</p>
 <p>To recover the file then an application should first read the file name, and then the file data. Once finished it can create a file with the name obtained and write each retrieved byte.</p>
 <p>The idea behind steganography is that you can hide things where it’s not evident that something is concealed. Unfortunately this common mechanism is widely known and studied and there are several countermeasures, based mostly in statistical analysis and histograms of pixel color distribution (because this technique is not symmetric, you can investigate <em>LSB Matching</em> for a fix to this problem).</p>
