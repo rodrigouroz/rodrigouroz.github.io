@@ -10,6 +10,11 @@
 
     <!--Description-->
     
+        <meta name="description" content="Take a look at this picture from Amsterdam.
+
+What do you see?
+I see a beautiful canal view with a bridge at the bottom on a Spring day (I knew it was ">
+    
 
     <!--Author-->
     
@@ -18,7 +23,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="Awaiting the Singularity"/>
+        <meta property="og:title" content="Hiding things at plain sight"/>
     
 
     <!--Open Graph Description-->
@@ -31,7 +36,7 @@
 
     <!--Type page-->
     
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content="article" />
     
 
     <!--Page Cover-->
@@ -46,7 +51,7 @@
 
     <!-- Title -->
     
-    <title>Archives - Awaiting the Singularity</title>
+    <title>Hiding things at plain sight - Awaiting the Singularity</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
@@ -147,50 +152,124 @@
 </nav>
 
     <!-- Main Content -->
-    
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
 
-<!-- Page Header -->
-<!-- Set your background image for this header in the theme's configuration: index_cover -->
 <header class="intro-header" style="background-image: url('/img/home.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                    <h1>Archives</h1>
+                <div class="post-heading">
+                    <h1>Hiding things at plain sight</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        June 13th 2016
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/cryptography/">#cryptography</a> <a href="/tags/steganography/">#steganography</a> <a href="/tags/node-js/">#node.js</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/Software/">Software</a>
+
+                    
+                </div>
             
-                <div class="post-preview">
-    <a href="/2016/06/13/hiding-things-at-plain-sight/">
-        <h1 class="post-title archive">
-            Hiding things at plain sight
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        June 13th 2016
-    </p>
-</div>
+
+            <!-- Gallery -->
             
-            <div class="archive-before-pagination"></div>
-            <ul class="pager">
-    
-    
-</ul>
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p>Take a look at this picture from Amsterdam.</p>
+<img src="/2016/06/13/hiding-things-at-plain-sight/amsterdam.png" alt="Amsterdam" title="Amsterdam">
+<p>What do you see?</p>
+<p>I see a beautiful canal view with a bridge at the bottom on a Spring day (I knew it was Spring when I shot it).</p>
+<p>Do you see anything else? Something that don’t belong to the picture, something that shouldn’t be there…</p>
+<p>No, me neither. We don’t see it because it’s not meant to be seen, it’s concealed in the image.</p>
+<p>This was brilliantly put a long time ago:</p>
+<blockquote><p>“What if the best way to hide something is at plain sight, where no one would suspect?”</p>
+<footer><strong>Edgar Alan Poe</strong><cite>The Purloined Letter</cite></footer></blockquote>
+<h2 id="History"><a href="#History" class="headerlink" title="History"></a>History</h2><p>Yeah, like I’ll try to outperform <em>Wikipedia</em>. Check <a href="https://en.wikipedia.org/wiki/Steganography" target="_blank" rel="external">Steganography</a></p>
+<h2 id="Technique"><a href="#Technique" class="headerlink" title="Technique"></a>Technique</h2><p>The most common form of Steganography is called LSB for <em>Least Significant Bit</em>.</p>
+<p>This uses the fact that a slight change in a pixel’s color is undetectable by the human eye.</p>
+<p>Check for instance the samples below.</p>
+<h3 id="Sample-1"><a href="#Sample-1" class="headerlink" title="Sample 1"></a>Sample 1</h3><img src="/2016/06/13/hiding-things-at-plain-sight/sample-1.png" alt="Sample 1" title="Sample 1">
+<h3 id="Sample-2"><a href="#Sample-2" class="headerlink" title="Sample 2"></a>Sample 2</h3><img src="/2016/06/13/hiding-things-at-plain-sight/sample-2.png" alt="Sample 2" title="Sample 2">
+<p>Can you spot the difference?</p>
+<p>You don’t believe there’s a difference at all? Use a color meter to check it.</p>
+<p>Both images are in full color. The first sample is Red = 108, Green = 118, Blue = 154. The second sample is Red = 109, Green = 119, Blue = 155.</p>
+<p>As you can see in the second sample every Least Significant Bit is modified. This is the maximum change you can perform in a single pixel (changing every color component). If we change 1 bit per byte then we’re changing 1/8 of the file, or 12,5% of it.</p>
+<p>If you can’t tell the difference at this scale (a 600 x 450 pixels image) imagine realizing that a single pixel has been modified.</p>
+<p>So if this is undetectable then perhaps we can use this slight change in our favor…</p>
+<h2 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h2><p>Here I describe the basics of the algorithm used to hide the image (and thus to recover it).</p>
+<p>The input image (the host) must be in RGB format. Each pixel is defined by the colors Red, Green and Blue. Therefore each pixel needs 3 bytes.</p>
+<p>We said we will use the least significant bit for each byte, so for every 3 pixels we have 9 bits available (3 pixels times 3 bytes per pixel gives us 9 bytes, we get a bit of each of those 9 bytes). We can use the first 8 bits to embed a single byte from the data we’re hiding and the last bit can be used to signal the end of the buffer. If the 9th. bit is 0 that means it’s the end of the buffer, otherwise we keep reading until a 0 is found. This allows us to embed several different sections of data in the same image.</p>
+<p>To put it in another way, every 8th. bit of the file is a bit of the concealed buffer of data. There are two sections in this algorithm, the first section is the filename and the second section is the file data.</p>
+<p>Starting at first pixel the name of the file being hidden is stored. Then after the name (when the algorithm detects an end of the section as described above) the actual data of the file is stored, byte per byte.</p>
+<p>To recover the file then an application should first read the file name, and then the file data. Once finished it can create a file with the name obtained and write each retrieved byte.</p>
+<p>The idea behind steganography is that you can hide things where it’s not evident that something is concealed. Unfortunately this common mechanism is widely known and studied and there are several countermeasures, based mostly in statistical analysis and histograms of pixel color distribution (because this technique is not symmetric, you can investigate <em>LSB Matching</em> for a fix to this problem).</p>
+<p>To overcome this you can encrypt the data before embedding it in the file which will make obtaining the original file even harder. This file is not encrypted but the tool outlined at the end of the article supports encryption by providing a password.</p>
+<p>So with all this information you should be able to find the hidden file. It could be a good opportunity to test bitwise operators and operations in your favorite language.</p>
+<p>If you want to discover the hidden file and don’t want to build an application to do it you can use a simple tool I built for this post: <a href="https://www.npmjs.com/package/steganography" title="Steganography command line tool" target="_blank" rel="external">Steganography command line tool</a></p>
+<p>Just install the tool and do</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&gt; steganography dig-up amsterdam.png .</span><br></pre></td></tr></table></figure>
+<p>This will extract the embedded file in the current folder.</p>
+<hr>
+<p>I’d love to hear your comments. If you have found the hidden file, please let me know in a comment but don’t spoil other users ;-)</p>
+<p>For my next trick I will conceal the private key of a <a href="https://bitcoin.org" target="_blank" rel="external">Bitcoin</a> wallet with $100 in it. Are you up to the challenge? Stay tunned… </p>
+
+
+                
+                    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+                    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-575ef3d4ca1d6efa"></script>
+
+                    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+                    <div class="addthis_sharing_toolbox"></div>
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+    <hr />
+    <h3>Comments:</h3>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+
+                </div>
+            
         </div>
     </div>
-</div>
-
-
+</article>
 
     <!-- Footer -->
     <hr />
@@ -282,7 +361,7 @@
         var dsq = document.createElement('script');
         dsq.type = 'text/javascript';
         dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
